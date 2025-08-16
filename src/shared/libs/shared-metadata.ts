@@ -22,11 +22,11 @@ export function generatedMetadata({
     {
       name: "keywords",
       content:
-        "Product Designer, UI UX Designer, Web Designer, Shopify Developer, Web Developer, Webflow Expert, Framer Expert, Squarespace, Wix Developer, Fullstack, Mobile Developer, Indie Hacker",
+        "Landing Page, Inspirations, Web Design, References, Micro Site, Design, App Design, Curated, List, Stuuning Web Inspirations",
     },
     { name: "creator", content: "nyomansunima" },
-    { name: "publisher", content: "nyomansunima" },
-    { name: "application-name", content: "Nyoman Sunima" },
+    { name: "publisher", content: "weecraft" },
+    { name: "application-name", content: "Heroico" },
     { name: "google-site-verification", content: config.verification.google },
     { name: "category", content: "Websites" },
     { name: "generator", content: "React Router" },
