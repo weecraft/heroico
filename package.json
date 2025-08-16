@@ -1,0 +1,52 @@
+{
+  "name": "personal-site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "react-router dev",
+    "build": "react-router build",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "format": "prettier . --write --list-different",
+    "lint": "eslint . --fix",
+    "clean": "rm -rf build dist .react-router"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@react-router/fs-routes": "^7.8.0",
+    "@react-router/node": "^7.8.0",
+    "@react-router/serve": "^7.8.0",
+    "isbot": "^5",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "react-hook-form": "^7.62.0",
+    "react-router": "^7.8.0",
+    "zod": "^4.0.17"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^5.2.1",
+    "@eslint-react/eslint-plugin": "^1.52.5",
+    "@react-router/dev": "^7.8.0",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.1.12",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.12",
+    "@types/node": "^24",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "class-variance-authority": "^0.7.1",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "prettier": "^3.6.2",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.12",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.2",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
