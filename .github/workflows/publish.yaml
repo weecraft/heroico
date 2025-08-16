@@ -4,7 +4,7 @@
 # ***** NOTE ******
 # This deployment need to setup some secrets
 
-name: Release & Publish
+name: Publish
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_WEB_ORG_ID }}
@@ -19,8 +19,8 @@ permissions:
   contents: write
 
 jobs:
-  publish:
-    name: Publish
+  deploy-to-vercel:
+    name: Deploy to vercel
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
