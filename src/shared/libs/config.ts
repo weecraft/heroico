@@ -4,7 +4,11 @@ function isBrowser() {
 
 export function loadServerEnv() {
   const env = process.env
-  return env
+
+  return {
+    APP_HOST: env.APP_HOST,
+    GOOGLE_VERIFICATION: env.GOOGLE_VERIFICATION,
+  }
 }
 
 export function loadConfig() {
@@ -15,14 +19,8 @@ export function loadConfig() {
     app: {
       host: ENV.APP_HOST || "http://localhost:5173",
     },
-    posthog: {
-      key: ENV.POSTHOG_KEY,
-    },
     verification: {
       google: ENV.GOOGLE_VERIFICATION,
-    },
-    kit: {
-      key: ENV.KIT_API_KEY,
     },
   } as const
 }
