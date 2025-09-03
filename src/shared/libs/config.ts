@@ -8,6 +8,7 @@ interface ENV {
   private: {
     CONVEX_DEPLOYMENT: string
     CLERK_SECRET_KEY: string
+    CLERK_JWT_ISSUER_DOMAIN: string
   }
 }
 
@@ -17,12 +18,8 @@ declare global {
   }
 }
 
-function isBrowser() {
-  return typeof window !== "undefined"
-}
-
 export function loadEnv(): ENV {
-  const isOnBrowser = isBrowser()
+  const isOnBrowser = typeof window !== "undefined"
   const env = isOnBrowser ? window.__ENV__ : process.env
 
   return {
@@ -35,6 +32,7 @@ export function loadEnv(): ENV {
     private: {
       CONVEX_DEPLOYMENT: env.CONVEX_DEPLOYMENT,
       CLERK_SECRET_KEY: env.CLERK_SECRET_KEY!,
+      CLERK_JWT_ISSUER_DOMAIN: env.CLERK_JWT_ISSUER_DOMAIN,
     },
   }
 }
