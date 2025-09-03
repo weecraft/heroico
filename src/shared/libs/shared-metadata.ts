@@ -1,4 +1,4 @@
-import { loadConfig } from "./config"
+import { loadEnv } from "./config"
 
 interface GeneratedMetadataInput {
   title: string
@@ -11,7 +11,7 @@ export function generatedMetadata({
   description,
   image,
 }: GeneratedMetadataInput) {
-  const config = loadConfig()
+  const env = loadEnv()
 
   return [
     { title },
@@ -27,7 +27,10 @@ export function generatedMetadata({
     { name: "creator", content: "nyomansunima" },
     { name: "publisher", content: "weecraft" },
     { name: "application-name", content: "Heroico" },
-    { name: "google-site-verification", content: config.verification.google },
+    {
+      name: "google-site-verification",
+      content: env.public.GOOGLE_VERIFICATION,
+    },
     { name: "category", content: "Websites" },
     { name: "generator", content: "React Router" },
     { name: "pinterest-rich-pin", content: "true" },

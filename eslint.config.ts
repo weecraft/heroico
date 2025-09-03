@@ -6,6 +6,8 @@ import {
   react,
   typescript,
 } from "@antfu/eslint-config"
+import pluginQuery from "@tanstack/eslint-plugin-query"
+import convexPlugin from "@convex-dev/eslint-plugin"
 
 export default combine(
   ignores(["build/**", ".react-router/**"]),
@@ -20,4 +22,6 @@ export default combine(
       "react/no-unstable-context-value": "off",
     },
   }),
+  pluginQuery.configs["flat/recommended"],
+  convexPlugin.configs.recommended,
 )

@@ -11,3 +11,6 @@ build/
 
 # vercel
 .vercel
+
+# Convex
+convex/_generated
