@@ -10,20 +10,55 @@ import {
 } from "react-router"
 import "@shared/styles/globals.css"
 import { Button } from "@shared/components"
-import { loadServerEnv } from "@shared/libs"
+import * as React from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { ConvexQueryClient } from "@convex-dev/react-query"
+import { ConvexProvider, ConvexReactClient } from "convex/react"
+import { ClerkProvider } from "@clerk/react-router"
+import { rootAuthLoader } from "@clerk/react-router/ssr.server"
+import type { Route } from "./+types/root"
+import { loadEnv } from "@shared/libs"
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
-export function loader() {
-  const ENV = loadServerEnv()
+export async function loader(args: Route.LoaderArgs) {
+  const env = loadEnv()
 
-  return { ENV }
+  return rootAuthLoader(
+    args,
+    () => {
+      return { env }
+    },
+    {
+      publishableKey: env.public.CLERK_PUBLISHABLE_KEY,
+      secretKey: env.private.CLERK_SECRET_KEY,
+    },
+  )
 }
 
 export function Layout({ children }: LayoutProps) {
-  const { ENV } = useLoaderData<typeof loader>()
+  const loaderData = useLoaderData<typeof loader>()
+  const { env } = loaderData
+
+  // Convex setup and query client
+  const convex = new ConvexReactClient(env.public.CONVEX_URL)
+  const convexQueryClient = new ConvexQueryClient(convex)
+
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            queryKeyHashFn: convexQueryClient.hashFn(),
+            queryFn: convexQueryClient.queryFn(),
+          },
+        },
+      }),
+  )
+  convexQueryClient.connect(queryClient)
 
   return (
     <html lang="en">
@@ -35,13 +70,20 @@ export function Layout({ children }: LayoutProps) {
       </head>
       <body>
         <div className="min-h-screen pb-28 mt-5 tablet:mt-10 tablet:pb-56">
-          {children}
+          <ClerkProvider loaderData={loaderData}>
+            <ConvexProvider client={convex}>
+              <QueryClientProvider client={queryClient}>
+                {children}
+                <ReactQueryDevtools initialIsOpen={false} />
+              </QueryClientProvider>
+            </ConvexProvider>
+          </ClerkProvider>
         </div>
         <ScrollRestoration />
         <Scripts />
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.__ENV__ = ${JSON.stringify(ENV)}`,
+            __html: `window.__ENV__ = ${JSON.stringify(env.public)}`,
           }}
         />
       </body>
