@@ -1,3 +1,4 @@
+import * as React from "react"
 import {
   isRouteErrorResponse,
   Link,
@@ -8,16 +9,16 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "react-router"
+import type { Route } from "./+types/root"
 import "@shared/styles/globals.css"
 import { Button } from "@shared/components"
-import * as React from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { ConvexQueryClient } from "@convex-dev/react-query"
-import { ConvexProvider, ConvexReactClient } from "convex/react"
-import { ClerkProvider } from "@clerk/react-router"
+import { ConvexReactClient } from "convex/react"
+import { ConvexProviderWithClerk } from "convex/react-clerk"
+import { ClerkProvider, useAuth } from "@clerk/react-router"
 import { rootAuthLoader } from "@clerk/react-router/ssr.server"
-import type { Route } from "./+types/root"
 import { loadEnv } from "@shared/libs"
 
 interface LayoutProps {
@@ -33,8 +34,8 @@ export async function loader(args: Route.LoaderArgs) {
       return { env }
     },
     {
-      publishableKey: env.public.CLERK_PUBLISHABLE_KEY,
       secretKey: env.private.CLERK_SECRET_KEY,
+      publishableKey: env.public.CLERK_PUBLISHABLE_KEY,
     },
   )
 }
@@ -43,10 +44,8 @@ export function Layout({ children }: LayoutProps) {
   const loaderData = useLoaderData<typeof loader>()
   const { env } = loaderData
 
-  // Convex setup and query client
   const convex = new ConvexReactClient(env.public.CONVEX_URL)
   const convexQueryClient = new ConvexQueryClient(convex)
-
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
@@ -71,12 +70,12 @@ export function Layout({ children }: LayoutProps) {
       <body>
         <div className="min-h-screen pb-28 mt-5 tablet:mt-10 tablet:pb-56">
           <ClerkProvider loaderData={loaderData}>
-            <ConvexProvider client={convex}>
+            <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
               <QueryClientProvider client={queryClient}>
                 {children}
                 <ReactQueryDevtools initialIsOpen={false} />
               </QueryClientProvider>
-            </ConvexProvider>
+            </ConvexProviderWithClerk>
           </ClerkProvider>
         </div>
         <ScrollRestoration />
