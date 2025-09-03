@@ -21,7 +21,7 @@ _"Minimal react router site starter template for building landing page, marketin
 
 Since building this project here are list about stack, site, tech and any library in this project
 
-- [React router](https://nextjs.org)
+- [React router](https://reactrouter.com)
 - [Tailwincss](https://tailwindcss.com)
 - [Shadcn UI](https://ui.shadcn.com)
 - [Flaticon UI](https://www.flaticon.com/search?type=uicon)
