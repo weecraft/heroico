@@ -4,7 +4,7 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { Controller, FormProvider, useFormContext } from "react-hook-form"
 import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form"
-import { mergeClass } from "@shared/libs"
+import { mergeClass } from "@shared/libs/utils"
 
 const Form = FormProvider
 

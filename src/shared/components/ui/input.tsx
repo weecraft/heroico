@@ -1,4 +1,4 @@
-import { mergeClass } from "@shared/libs"
+import { mergeClass } from "@shared/libs/utils"
 import * as React from "react"
 
 const Input = ({
