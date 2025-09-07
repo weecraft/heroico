@@ -1,16 +1,12 @@
+node_modules
 .DS_Store
-node_modules/
-
-# React Router
-.react-router/
-build/
-
-# environment variables
+dist
+dist-ssr
+*.local
 .env
-.env.local
-
-# vercel
-.vercel
-
-# Convex
-convex/_generated
+.nitro
+.tanstack
+.output
+.vinxi
+.vscode
+.zed
