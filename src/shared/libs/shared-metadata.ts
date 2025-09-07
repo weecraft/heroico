@@ -1,20 +1,33 @@
-import { loadEnv } from "./config"
-
-interface GeneratedMetadataInput {
+interface MetaTagsInput {
   title: string
   description: string
   image?: string
+  keywords?: string
 }
 
-export function generatedMetadata({
+export function generateMetaTags({
   title,
   description,
   image,
-}: GeneratedMetadataInput) {
-  const env = loadEnv()
-
+  keywords,
+}: MetaTagsInput):
+  | (
+      | React.DetailedHTMLProps<
+          React.MetaHTMLAttributes<HTMLMetaElement>,
+          HTMLMetaElement
+        >
+      | undefined
+    )[]
+  | undefined {
   return [
-    { title },
+    {
+      title,
+    },
+    {
+      name: "description",
+      content: description,
+    },
+
     {
       name: "description",
       content: description,
@@ -22,15 +35,13 @@ export function generatedMetadata({
     {
       name: "keywords",
       content:
-        "Landing Page, Inspirations, Web Design, References, Micro Site, Design, App Design, Curated, List, Stuuning Web Inspirations",
+        keywords ||
+        "Product Designer, UI UX Designer, Web Designer, Shopify Developer, Web Developer, Webflow Expert, Framer Expert, Squarespace, Wix Developer, Fullstack, Mobile Developer, Indie Hacker",
     },
     { name: "creator", content: "nyomansunima" },
-    { name: "publisher", content: "weecraft" },
-    { name: "application-name", content: "Heroico" },
-    {
-      name: "google-site-verification",
-      content: env.public.GOOGLE_VERIFICATION,
-    },
+    { name: "publisher", content: "nyomansunima" },
+    { name: "application-name", content: "Nyoman Sunima" },
+    { name: "google-site-verification", content: "" },
     { name: "category", content: "Websites" },
     { name: "generator", content: "React Router" },
     { name: "pinterest-rich-pin", content: "true" },
