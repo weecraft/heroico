@@ -6,7 +6,8 @@ import {
   react,
   typescript,
 } from "@antfu/eslint-config"
-import reactQuery from "@tanstack/eslint-plugin-query"
+import reactQueryPlugin from "@tanstack/eslint-plugin-query"
+import convexPlugin from "@convex-dev/eslint-plugin"
 
 export default combine(
   ignores([".nitro/**", ".output/**", ".tanstack/**", "**/*.gen.ts"]),
@@ -19,5 +20,6 @@ export default combine(
       "react/no-unstable-context-value": "off",
     },
   }),
-  reactQuery.configs["flat/recommended"],
+  reactQueryPlugin.configs["flat/recommended"],
+  convexPlugin.configs.recommended,
 )
