@@ -1,40 +1,24 @@
-import { createRouter as createTanStackRouter } from "@tanstack/react-router"
+import { createRouter as createTanstackRouter } from "@tanstack/react-router"
 import { routeTree } from "./routeTree.gen"
 import { routerWithQueryClient } from "@tanstack/react-router-with-query"
-import { ConvexProvider, ConvexReactClient } from "convex/react"
-import { ConvexQueryClient } from "@convex-dev/react-query"
 import { QueryClient } from "@tanstack/react-query"
-import { getEnv } from "@shared/libs/config"
 
-const env = getEnv()
+export const createRouter = () => {
+  // Define the integrations
+  // including query client, etc.
+  const queryClient = new QueryClient()
 
-export function createRouter() {
-  // Integrate convex, clerk and query
-  const convex = new ConvexReactClient(env.VITE_CONVEX_URL, {
-    unsavedChangesWarning: false,
-  })
-  const convexQueryClient = new ConvexQueryClient(convex)
-  const queryClient: QueryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        queryKeyHashFn: convexQueryClient.hashFn(),
-        queryFn: convexQueryClient.queryFn(),
-      },
-    },
-  })
-  convexQueryClient.connect(queryClient)
-
-  // define the route with context
+  // Define the router and wrap with query client functions
+  // to adding context of query client in each context of route
   const router = routerWithQueryClient(
-    createTanStackRouter({
+    createTanstackRouter({
       routeTree,
       defaultPreload: "intent",
-      context: { queryClient, convexClient: convex, convexQueryClient },
-      Wrap: ({ children }) => (
-        <ConvexProvider client={convexQueryClient.convexClient}>
-          {children}
-        </ConvexProvider>
-      ),
+      context: {
+        queryClient,
+      },
+      scrollRestoration: true,
+      defaultPreloadStaleTime: 0,
     }),
     queryClient,
   )
