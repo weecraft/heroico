@@ -4,9 +4,11 @@ dist
 dist-ssr
 *.local
 .env
+.env.local
 .nitro
 .tanstack
 .output
 .vinxi
 .vscode
 .zed
+.vercel

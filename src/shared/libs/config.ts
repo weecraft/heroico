@@ -1,4 +1,6 @@
 interface ENV {
+  VITE_APP_HOST: string
+  VITE_GOOGLE_VERIFICATION: string
   CONVEX_DEPLOYMENT: string
   VITE_CONVEX_URL: string
   VITE_CLERK_PUBLISHABLE_KEY: string
@@ -19,6 +21,8 @@ export function getEnv(): ENV {
   const env = isServer ? process.env : (import.meta.env as any)
 
   return {
+    VITE_APP_HOST: env.VITE_APP_HOST,
+    VITE_GOOGLE_VERIFICATION: env.VITE_GOOGLE_VERIFICATION,
     CONVEX_DEPLOYMENT: env.CONVEX_DEPLOYMENT,
     VITE_CONVEX_URL: env.VITE_CONVEX_URL,
     VITE_CLERK_PUBLISHABLE_KEY: env.VITE_CLERK_PUBLISHABLE_KEY,

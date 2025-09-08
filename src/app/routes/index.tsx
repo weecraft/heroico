@@ -1,16 +1,22 @@
+import { HeroSection } from "@features/landing"
 import { generateMetaTags } from "@shared/libs/shared-metadata"
 import { createFileRoute } from "@tanstack/react-router"
-
-function App() {
-  return <div className="text-center"></div>
-}
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: generateMetaTags({
-      title: "YOUR TITLE | SITE NAME",
-      description: "YOUR DESCRIPTION",
+      title: "Stunning UI, UX design inspirations | Heroico",
+      description:
+        "Explore thousands of websites, landings, web app, mobile app, and desktop inspiration from real world creators",
     }),
   }),
-  component: App,
+  component: PageComponent,
 })
+
+function PageComponent() {
+  return (
+    <main className="flex flex-col gap-28">
+      <HeroSection />
+    </main>
+  )
+}

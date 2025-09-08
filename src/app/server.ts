@@ -6,6 +6,8 @@ import {
 import { createRouter } from "./router"
 import { createClerkHandler } from "@clerk/tanstack-react-start/server"
 
+// Custom server that allow to work the handler
+// with the clerk, wrap the basic one with predefined handler
 const handlerFactory = createClerkHandler(
   createStartHandler({
     createRouter,

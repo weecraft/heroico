@@ -1,31 +1,27 @@
+import * as React from "react"
 import {
   HeadContent,
-  Outlet,
   Scripts,
   createRootRouteWithContext,
-  useRouteContext,
 } from "@tanstack/react-router"
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+import { ClerkProvider } from "@clerk/tanstack-react-start"
+import {
+  TanStackRouterDevtools,
+  TanStackRouterDevtoolsPanel,
+} from "@tanstack/react-router-devtools"
 import { TanStackDevtools } from "@tanstack/react-devtools"
 import styles from "@shared/styles/globals.css?url"
 import type { QueryClient } from "@tanstack/react-query"
-import type { ConvexReactClient } from "convex/react"
-import type { ConvexQueryClient } from "@convex-dev/react-query"
-import { getClerkAuth } from "@features/account"
-import { ConvexProviderWithClerk } from "convex/react-clerk"
-import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start"
-
-interface RootRouteWithContextProps {
-  queryClient: QueryClient
-  convexClient: ConvexReactClient
-  convexQueryClient: ConvexQueryClient
-}
 
 interface RootDocumentProps {
   children: React.ReactNode
 }
 
-export const Route = createRootRouteWithContext<RootRouteWithContextProps>()({
+interface RouteWithContextProps {
+  queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<RouteWithContextProps>()({
   head: () => ({
     meta: [
       {
@@ -43,59 +39,54 @@ export const Route = createRootRouteWithContext<RootRouteWithContextProps>()({
       },
     ],
   }),
-  beforeLoad: async (ctx) => {
-    const auth = await getClerkAuth()
-    const { userId, token } = auth
-
-    if (token) {
-      ctx.context.convexQueryClient.serverHttpClient?.setAuth(token)
-    }
-
-    return {
-      userId,
-      token,
-    }
-  },
-  shellComponent: RootComponent,
+  shellComponent: RootDocument,
 })
 
-function RootComponent() {
-  const context = useRouteContext({ from: Route.id })
-
-  return (
-    <ClerkProvider>
-      <ConvexProviderWithClerk client={context.convexClient} useAuth={useAuth}>
-        <RootDocument>
-          <Outlet />
-        </RootDocument>
-      </ConvexProviderWithClerk>
-    </ClerkProvider>
-  )
-}
-
-function RootDocument({ children }: RootDocumentProps) {
+/**
+ * RootDocument is a React component that establishes the fundamental HTML document structure.
+ * It acts as the root HTML wrapper for the application, handling the <html>, <head>, and <body> tags.
+ *
+ * It incorporates essential elements like `HeadContent` for dynamic head management,
+ * renders its `children` within the `<body>`, and includes `Scripts` for client-side JavaScript.
+ *
+ * Additionally, it integrates development tools such as `TanStackDevtools` for React Query
+ * and `TanStackRouterDevtoolsPanel` for `@tanstack/react-router` debugging.
+ *
+ * @param {RootDocumentProps} props - The props for the RootDocument component.
+ * @param {React.ReactNode} props.children - The child components to be rendered inside the `<body>`.
+ * @returns {React.ReactElement} A React element representing the complete HTML document structure.
+ */
+function RootDocument({ children }: RootDocumentProps): React.ReactElement {
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body>
-        {children}
-
-        {/* Devtools config */}
-        <TanStackDevtools
-          config={{
-            position: "bottom-left",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        <ClerkProvider>{children}</ClerkProvider>
+        <Devtools />
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function Devtools(): React.ReactElement {
+  return (
+    <TanStackDevtools
+      config={{
+        position: "bottom-right",
+      }}
+      plugins={[
+        {
+          name: "Tanstack Router",
+          render: <TanStackRouterDevtoolsPanel />,
+        },
+        {
+          name: "Tanstack Query",
+          render: <TanStackRouterDevtools />,
+        },
+      ]}
+    />
   )
 }
