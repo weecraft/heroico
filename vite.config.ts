@@ -5,6 +5,9 @@ import viteTsConfigPaths from "vite-tsconfig-paths"
 import tailwindcss from "@tailwindcss/vite"
 
 const config = defineConfig({
+  server: {
+    port: 3000,
+  },
   plugins: [
     viteTsConfigPaths(),
     tailwindcss(),
