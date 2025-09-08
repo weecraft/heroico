@@ -1,9 +1,13 @@
+import { getEnv } from "./config"
+
 interface MetaTagsInput {
   title: string
   description: string
   image?: string
   keywords?: string
 }
+
+const env = getEnv()
 
 export function generateMetaTags({
   title,
@@ -41,7 +45,7 @@ export function generateMetaTags({
     { name: "creator", content: "nyomansunima" },
     { name: "publisher", content: "nyomansunima" },
     { name: "application-name", content: "Nyoman Sunima" },
-    { name: "google-site-verification", content: "" },
+    { name: "google-site-verification", content: env.VITE_GOOGLE_VERIFICATION },
     { name: "category", content: "Websites" },
     { name: "generator", content: "React Router" },
     { name: "pinterest-rich-pin", content: "true" },
