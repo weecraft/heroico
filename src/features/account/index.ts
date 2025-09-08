@@ -1,1 +1,1 @@
-export * from "./clerk-account-service"
+export * from "./account-service"

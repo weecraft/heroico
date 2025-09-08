@@ -17,6 +17,8 @@ export const getClerkAuth = createServerFn({ method: "GET" }).handler(
         userId: auth.userId,
         token,
       }
-    } catch {}
+    } catch {
+      throw new Error("Opps, something happen when get the auth account")
+    }
   },
 )
