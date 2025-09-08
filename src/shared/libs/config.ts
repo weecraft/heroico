@@ -1,4 +1,6 @@
 interface ENV {
+  VITE_APP_HOST: string
+  VITE_GOOGLE_VERIFICATION: string
   CONVEX_DEPLOYMENT: string
   VITE_CONVEX_URL: string
   VITE_CLERK_PUBLISHABLE_KEY: string
