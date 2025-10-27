@@ -1,24 +1,31 @@
-import { defineConfig } from "vite"
-import { tanstackStart } from "@tanstack/react-start/plugin/vite"
-import viteReact from "@vitejs/plugin-react"
-import viteTsConfigPaths from "vite-tsconfig-paths"
-import tailwindcss from "@tailwindcss/vite"
+import tailwindcss from "@tailwindcss/vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import react from "@vitejs/plugin-react";
+import { nitro } from "nitro/vite";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const config = defineConfig({
   server: {
     port: 3000,
   },
   plugins: [
-    viteTsConfigPaths(),
+    tsconfigPaths(),
     tailwindcss(),
     tanstackStart({
-      customViteReactPlugin: true,
-      tsr: {
-        srcDirectory: "src/app",
+      srcDirectory: "src/app",
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+      },
+      sitemap: {
+        enabled: true,
+        host: "https://www.heroico.site",
       },
     }),
-    viteReact(),
+    react(),
+    nitro(),
   ],
-})
+});
 
-export default config
+export default config;
