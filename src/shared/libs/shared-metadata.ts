@@ -1,13 +1,13 @@
-import { getEnv } from "./config"
+import { getEnv } from "./config";
 
-interface MetaTagsInput {
-  title: string
-  description: string
-  image?: string
-  keywords?: string
-}
+type MetaTagsInput = {
+  title: string;
+  description: string;
+  image?: string;
+  keywords?: string;
+};
 
-const env = getEnv()
+const env = getEnv();
 
 export function generateMetaTags({
   title,
@@ -84,5 +84,5 @@ export function generateMetaTags({
         image ??
         "https://cdn.hashnode.com/res/hashnode/image/upload/v1729709107977/6dabcb40-d18e-48cf-a86b-7b423efb6605.png",
     },
-  ]
+  ];
 }

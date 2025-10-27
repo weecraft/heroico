@@ -1,25 +1,19 @@
-import * as React from "react"
+import styles from "@shared/styles/globals.css?url";
+import type { QueryClient } from "@tanstack/react-query";
 import {
+  createRootRouteWithContext,
   HeadContent,
   Scripts,
-  createRootRouteWithContext,
-} from "@tanstack/react-router"
-import { ClerkProvider } from "@clerk/tanstack-react-start"
-import {
-  TanStackRouterDevtools,
-  TanStackRouterDevtoolsPanel,
-} from "@tanstack/react-router-devtools"
-import { TanStackDevtools } from "@tanstack/react-devtools"
-import styles from "@shared/styles/globals.css?url"
-import type { QueryClient } from "@tanstack/react-query"
+} from "@tanstack/react-router";
+import type * as React from "react";
 
-interface RootDocumentProps {
-  children: React.ReactNode
-}
+type RootDocumentProps = {
+  children: React.ReactNode;
+};
 
-interface RouteWithContextProps {
-  queryClient: QueryClient
-}
+type RouteWithContextProps = {
+  queryClient: QueryClient;
+};
 
 export const Route = createRootRouteWithContext<RouteWithContextProps>()({
   head: () => ({
@@ -40,22 +34,8 @@ export const Route = createRootRouteWithContext<RouteWithContextProps>()({
     ],
   }),
   shellComponent: RootDocument,
-})
+});
 
-/**
- * RootDocument is a React component that establishes the fundamental HTML document structure.
- * It acts as the root HTML wrapper for the application, handling the <html>, <head>, and <body> tags.
- *
- * It incorporates essential elements like `HeadContent` for dynamic head management,
- * renders its `children` within the `<body>`, and includes `Scripts` for client-side JavaScript.
- *
- * Additionally, it integrates development tools such as `TanStackDevtools` for React Query
- * and `TanStackRouterDevtoolsPanel` for `@tanstack/react-router` debugging.
- *
- * @param {RootDocumentProps} props - The props for the RootDocument component.
- * @param {React.ReactNode} props.children - The child components to be rendered inside the `<body>`.
- * @returns {React.ReactElement} A React element representing the complete HTML document structure.
- */
 function RootDocument({ children }: RootDocumentProps): React.ReactElement {
   return (
     <html lang="en">
@@ -63,30 +43,9 @@ function RootDocument({ children }: RootDocumentProps): React.ReactElement {
         <HeadContent />
       </head>
       <body>
-        <ClerkProvider>{children}</ClerkProvider>
-        <Devtools />
+        {children}
         <Scripts />
       </body>
     </html>
-  )
-}
-
-function Devtools(): React.ReactElement {
-  return (
-    <TanStackDevtools
-      config={{
-        position: "bottom-right",
-      }}
-      plugins={[
-        {
-          name: "Tanstack Router",
-          render: <TanStackRouterDevtoolsPanel />,
-        },
-        {
-          name: "Tanstack Query",
-          render: <TanStackRouterDevtools />,
-        },
-      ]}
-    />
-  )
+  );
 }

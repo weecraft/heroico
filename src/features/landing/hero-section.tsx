@@ -1,27 +1,25 @@
-import { Button } from "@shared/components"
-import logo from "./logo.webp"
+import logo from "./logo.webp";
+import { WaitlistForm } from "./waitlist-form";
 
 export function HeroSection() {
   return (
-    <section className="flex flex-col items-center py-28 container mx-auto">
-      <img src={logo} width={75} height={75} alt="Heroico" />
+    <section className="container mx-auto flex flex-col items-center px-5 py-28">
+      <img alt="Heroico" className="mt-16" height={64} src={logo} width={64} />
 
-      <h2 className="text-7xl font-bold leading-tight text-center mt-10">
+      <h2 className="mt-10 text-center font-medium tablet:text-5xl text-3xl tracking-tight">
         The world-class
         <br />
         design ideas
       </h2>
 
-      <p className="text-foreground/60 leading-7 text-lg text-center w-5/12 mt-7">
+      <p className="mt-10 laptop:w-4/12 tablet:w-8/12 text-center">
         Discover hundreds of landing pages created by leading companies for your
         design inspiration
       </p>
 
-      <div className="flex items-center gap-3 mt-16">
-        <Button variant={"secondary"} size={"lg"}>
-          Try beta now
-        </Button>
+      <div className="mt-10 flex laptop:w-4/12 tablet:w-8/12 w-full">
+        <WaitlistForm />
       </div>
     </section>
-  )
+  );
 }

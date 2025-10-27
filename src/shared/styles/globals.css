@@ -1,5 +1,5 @@
 /* Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 /* Icons */
 @import url("https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css");
@@ -7,13 +7,13 @@
 /* Tailwindcss */
 @import "tailwindcss";
 
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
-@plugin 'tailwindcss-animate';
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
 
 @theme {
   --font-*: initial;
-  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Inter", sans-serif;
 
   --breakpoint-*: initial;
   --breakpoint-tablet: 40rem;
@@ -51,7 +51,7 @@
   }
 
   body {
-    @apply text-base font-normal leading-normal! text-foreground bg-background font-sans antialiased selection:bg-blue-100/90 selection:text-blue-950;
+    @apply text-base font-normal leading-normal text-foreground bg-background font-sans antialiased selection:bg-blue-100/90 selection:text-blue-950;
     font-style: normal;
   }
 

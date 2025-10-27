@@ -1,11 +1,11 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva } from "class-variance-authority"
-import type { VariantProps } from "class-variance-authority"
-import { mergeClass } from "@shared/libs/utils"
+import { Slot } from "@radix-ui/react-slot";
+import { mergeClass } from "@shared/libs/utils";
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import type * as React from "react";
 
 const buttonVariants = cva(
-  "flex items-center justify-center font-semibold whitespace-nowrap text-sm leading-none! transition-all duration-300 gap-2 group relative cursor-pointer select-none",
+  "group relative flex cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap font-medium text-sm leading-none! transition-all duration-300",
   {
     variants: {
       variant: {
@@ -13,26 +13,26 @@ const buttonVariants = cva(
         outline: "border border-border bg-background text-foreground",
         text: "text-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground border border-transparent hover:bg-secondary/60 hover:border-border",
+          "border border-transparent bg-secondary text-secondary-foreground hover:border-border hover:bg-secondary/60",
       },
       size: {
-        base: "h-10 px-4 rounded-xl text-sm",
-        sm: "h-9 px-3 rounded-full",
-        lg: "h-14 px-8 rounded-full",
-        icon: "h-10 w-10 rounded-2xl text-sm bg-surface",
+        base: "h-10 rounded-xl px-4 text-sm",
+        sm: "h-9 rounded-full px-3",
+        lg: "h-14 rounded-full px-8",
+        icon: "h-10 w-10 rounded-2xl bg-surface text-sm",
       },
     },
     defaultVariants: {
       variant: "primary",
       size: "base",
     },
-  },
-)
+  }
+);
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }
+    asChild?: boolean;
+  };
 
 const Button = ({
   ref,
@@ -42,16 +42,16 @@ const Button = ({
   asChild = false,
   ...props
 }: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => {
-  const Comp = asChild ? Slot : "button"
+  const Comp = asChild ? Slot : "button";
   return (
     <Comp
       className={mergeClass(buttonVariants({ variant, size, className }))}
       ref={ref}
       {...props}
     />
-  )
-}
+  );
+};
 
-Button.displayName = "Button"
+Button.displayName = "Button";
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };
